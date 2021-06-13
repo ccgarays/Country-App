@@ -18,10 +18,26 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
+const { conn, Country } = require('./src/db.js');
+const axios = require('axios').default;
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
+  axios.get('https://restcountries.eu/rest/v2/all')
+  .then(response => {
+    response.data.forEach(country => {
+      Country.create({
+        id: country.alpha3Code,
+        name: country.name,
+        continent: country.region,
+        capital: country.capital,
+        flag: country.flag,
+        subregion: country.subregion,
+        area: country.area,
+        population: country.population,
+      })
+    })
+  }).catch(err => console.log(err))
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });

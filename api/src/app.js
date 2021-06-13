@@ -3,9 +3,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
-const axios = require('axios').default;
 
-const { Country } = require('./db.js');
+require('./db.js');
 
 const server = express();
 
@@ -24,22 +23,6 @@ server.use((req, res, next) => {
 });
 
 server.use('/', routes);
-
-axios.get('https://restcountries.eu/rest/v2/all')
-  .then(response => {
-    response.data.forEach(async country => {
-      await Country.create({
-        id: country.alpha3Code,
-        name: country.name,
-        continent: country.region,
-        capital: country.capital,
-        flag: country.flag,
-        subregion: country.subregion,
-        area: country.area,
-        population: country.population,
-      })
-    })
-  }).catch(err => console.log(err))
 
 // Error catching endware.
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
