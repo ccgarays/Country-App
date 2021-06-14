@@ -32,9 +32,9 @@ conn.sync({ force: true }).then(() => {
         continent: country.region,
         capital: country.capital,
         flag: country.flag,
-        subregion: country.subregion,
+        /* subregion: country.subregion,
         area: country.area,
-        population: country.population,
+        population: country.population, */
       })
     })
   }).catch(err => console.log(err))

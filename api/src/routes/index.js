@@ -9,14 +9,8 @@ const activities = require('./activities');
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.use('/countries', countries);
-router.use('/activities', activities);
+router.use('/activity', activities);
 
 
 
 module.exports = router;
-/* module.exports = {
-    countries: require('./countries'),
-    activities: require('./activities'),
-    index: router
-}
- */
