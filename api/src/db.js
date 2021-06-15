@@ -33,30 +33,6 @@ const { Country, Activity } = sequelize.models;
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 
-
-//relación de muchos a muchos (N:M). se crea tabla asociativa/intermedia, con modelo: AssociativeTable.
-//No se deja crear tabla por postgreSQL ya que el Id creado por este es de tipo INTEGER y es necesario
-//una FK STRING que corresponde al pais.
-
-
-/* const country_activity = sequelize.define('country_activity', {
-  country_id: {
-    type: Sequelize.DataTypes.STRING,
-    references: {
-      model: Country,
-      key: 'id'
-    }
-  },
-  activity_id: {
-    type: Sequelize.DataTypes.INTEGER,
-    references: {
-      model: Activity,
-      key: 'id'
-    }
-  }
-}) */
-
-
 Country.belongsToMany(Activity, { through: 'country_activity', foreignKey: 'country_id', });
 Activity.belongsToMany(Country, { through: 'country_activity', foreignKey: 'activity_id', });
 

@@ -30,8 +30,6 @@ router.get('/:idPais', async (req, res) => {
     const { idPais } = req.params;
     try {
         const { subregion, area, population } = (await axios.get(`https://restcountries.eu/rest/v2/alpha/${idPais}`)).data;
-        console.log(population)
-        const countryDB = (await Country.findByPk(idPais)).dataValues;
         const countryDB = await Country.findByPk(idPais, {
             include: [
                 {
