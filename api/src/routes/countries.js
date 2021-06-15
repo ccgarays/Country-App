@@ -30,8 +30,9 @@ router.get('/:idPais', async (req, res) => {
     const { idPais } = req.params;
     try {
         const { subregion, area, population } = (await axios.get(`https://restcountries.eu/rest/v2/alpha/${idPais}`)).data;
-        //const countryDB = (await Country.findByPk(idPais)).dataValues;
-        const countryDB = await Country.findByPk(idPais, {
+        console.log(population)
+        const countryDB = (await Country.findByPk(idPais)).dataValues;
+        /* const countryDB = await Country.findByPk(idPais, {
             include: [
                 {
                     model: Activity,
@@ -41,7 +42,7 @@ router.get('/:idPais', async (req, res) => {
                     }
                 }
             ]
-        })
+        }) */
         res.send({...countryDB, subregion, area, population});
     }catch (err) {
         console.log(err)
