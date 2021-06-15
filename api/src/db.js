@@ -38,28 +38,27 @@ const { Country, Activity } = sequelize.models;
 //No se deja crear tabla por postgreSQL ya que el Id creado por este es de tipo INTEGER y es necesario
 //una FK STRING que corresponde al pais.
 
-/* Country.belongsToMany(Activity, {
-  through: sequelize.define('country_activity', {
-    CountryId: {
-      type: Sequelize.DataTypes.STRING,
-      references: {
-        model: Country,
-        key: 'id'
-      }
-    },
-    ActivityId: {
-      type: Sequelize.DataTypes.INTEGER,
-      references: {
-        model: Activity,
-        key: 'id'
-      }
+
+/* const country_activity = sequelize.define('country_activity', {
+  country_id: {
+    type: Sequelize.DataTypes.STRING,
+    references: {
+      model: Country,
+      key: 'id'
     }
-  })
-}); */
+  },
+  activity_id: {
+    type: Sequelize.DataTypes.INTEGER,
+    references: {
+      model: Activity,
+      key: 'id'
+    }
+  }
+}) */
 
 
-Country.belongsToMany(Activity, { through: 'country_activity', foreignKey: 'activity_id'});
-Activity.belongsToMany(Country, { through: 'country_activity', foreignKey: 'country_id'});
+Country.belongsToMany(Activity, { through: 'country_activity', foreignKey: 'country_id', });
+Activity.belongsToMany(Country, { through: 'country_activity', foreignKey: 'activity_id', });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

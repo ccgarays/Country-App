@@ -42,7 +42,8 @@ router.get('/:idPais', async (req, res) => {
                 }
             ]
         })
-        res.send({...countryDB, subregion, area, population});
+        res.json({...countryDB.dataValues, subregion, area, population});
+        console.log('success')
     }catch (err) {
         console.log(err)
         res.status(404).send('Pais no encontrado')
