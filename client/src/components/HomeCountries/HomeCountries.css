@@ -1,0 +1,17 @@
+
+.form-selection {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 80px;
+}
+
+.container-countries {
+    display: flex;
+    flex-flow: row wrap;
+    padding-left: 10px;
+    padding-right: 50px;
+    justify-content: space-between;
+    margin-right: 100px;
+    margin-left: 100px;
+}

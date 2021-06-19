@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
         const limit = size ? size : 10;
         const offset = page ? page * limit : 0;
         const countries = await Country.findAndCountAll({
-            attributes: ['name', 'continent', 'flag'],
+            attributes: ['name', 'continent', 'flag', 'id'],
             limit,
             offset, 
             where: name ? {
@@ -41,7 +41,7 @@ router.get('/:idPais', async (req, res) => {
                 }
             ]
         })
-        res.json({...countryDB.dataValues, subregion, area, population});
+        res.send({...countryDB.dataValues, subregion, area, population});
         console.log('success')
     }catch (err) {
         console.log(err)

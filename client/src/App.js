@@ -1,11 +1,30 @@
 import './App.css';
+import { React } from 'react'
+import { Route } from 'react-router-dom'
+
+import Country from './components/CountryDetail/CountryDetail'
+import LandingPage from './components/LandingPage/LandingPage'
+import AddActivity from './components/AddActivity/AddActivity'
+import HomeCountries from './components/HomeCountries/HomeCountries'
+import Nav from './components/Nav/Nav';
+
+
 
 function App() {
+
   return (
-    <div className="App">
-      <h1>Henry Countries</h1>
-    </div>
+    <>
+    <Route path='/' component={LandingPage} >
+      <Nav/>
+      <Route exact path='/' component={LandingPage} />
+      <Route exact path='/countries' component={HomeCountries} />
+      <Route path='/countries/:idPais' component={Country} />
+      <Route path='/countries/?' component={Country} />
+      <Route path='/activity' component={AddActivity}/>
+    </Route>
+    </>
   );
 }
+
 
 export default App;
