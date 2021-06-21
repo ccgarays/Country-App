@@ -16,9 +16,9 @@ export function removeActivityCountry(payload) {
     return {type: REMOVE_ACTIVITY_COUNTRY, payload}
 }
 
-export function getCountries({name, page, size, continent, activity}) {
+export function getCountries({ name: nm = '', page, size, continent, order: {order, type} }) {
     return function (dispatch) {
-        return axios.get(`http://localhost:3001/countries/?name=${name}&page=${page}&size=${size}&continent=${continent}&activity=${activity}`)
+        return axios.get(`http://localhost:3001/countries/?name=${nm}&page=${page}&size=${size}&continent=${continent}&order=${order}&type=${type}`)
             .then(response => {
                 dispatch({ type: GET_COUNTRIES, payload: response.data.rows });
             })
