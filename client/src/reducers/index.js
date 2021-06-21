@@ -1,13 +1,16 @@
 const initialState = {
     countriesActivity: [],
     countriesLoaded: [],
-    countryDetail: {}
+    countryDetail: {},
+    countriesByAct: []
 }
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
-        case "ADD_ACTIVITY":
-            return { ...state, countriesActivity: [...state.countriesActivity, action.payload] }
+        case "GET_COUNTRIES_BYACT":
+            return { ...state, countriesByAct: state.countriesActivity.filter(act => act.name === action.payload)}
+        case "GET_ACTIVITIES":
+            return { ...state, countriesActivity: action.payload}
         case "REMOVE_ACTIVITY_COUNTRY":
             return { ...state, countriesActivity: state.countriesActivity.filter(country => country.id !== action.payload) }
         case "GET_COUNTRY_DETAIL":

@@ -27,10 +27,10 @@ if(!name) {
                 <p>Subregión: {subregion}</p>
                 <p>Area: {area}</p>
                 <p>Población: {population}</p>
+                {activities.length ? <h3>Actividades turisticas</h3>:null}
             </div>
-            {activities?
-            <div style={{alignItems: 'center'}}>
-                <h3>Actividades turisticas</h3>
+            {activities.length ?
+            <div>
                 <table>
                     <thead>
                         <tr>
@@ -41,20 +41,18 @@ if(!name) {
                         </tr>
                     </thead>
                     <tbody>
-                        {activities.map(act => {
-                            return (
+                        {activities.map(act => 
                                 <tr>
                                     <td>{act.name}</td>
                                     <td>{act.difficulty}</td>
                                     <td>{act.duration}</td>
                                     <td>{act.season}</td>
                                 </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
-            </div>
-    :<>{null}</>}
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+        :<>{null}</>}
         </div>
         
         )
