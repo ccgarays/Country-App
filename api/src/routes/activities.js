@@ -21,4 +21,27 @@ router.post('/', async (req, res) => {
     }
 })
 
+//devuleve todas las actividades que se hallan agregado
+router.get('/', async(req, res) => {
+    try {
+        const activities = await Activity.findAll({
+            include: [
+                {
+                    model: Country,
+                    attributes: ['name', 'continent', 'flag', 'id'],
+                    through: {
+                        attributes: [], //de esta forma las respuesta no incluye los atributos 'activity_id', 'country_id'
+                        // de la tabla de intermedia country_activity. Con attributes: ['activity_id', 'country_id']
+                        // se devuelven estos valores en la respuesta
+                    }
+                }
+            ],
+            attributes: ['name'],
+        })
+        res.send(activities)
+    }catch (err){
+        console.log(err)
+    }
+})
+
 module.exports = router;

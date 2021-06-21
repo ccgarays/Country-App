@@ -6,18 +6,27 @@ const Op = require('sequelize').Op;
 
 router.get('/', async (req, res) => {
     try {
-        const { page, size, name } = req.query;
+        const { page, size, name, continent } = req.query;
         const limit = size ? size : 10;
         const offset = page ? page * limit : 0;
         const countries = await Country.findAndCountAll({
+            include: [
+                {
+                    model: Activity,
+                    attributes: ['name'],
+                    through: {
+                        attributes: [], //de esta forma las respuesta no incluye los atributos 'activity_id', 'country_id'
+                        // de la tabla de intermedia country_activity. Con attributes: ['activity_id', 'country_id']
+                        // se devuelven estos valores en la respuesta
+                    }
+                }
+            ],
             attributes: ['name', 'continent', 'flag', 'id'],
             limit,
             offset, 
-            where: name ? {
-                name: {
-                    [Op.like]: `%${name}%`
-                }
-            } : null
+            where: {
+                [Op.and]: [name ? {name: {[Op.like]: `%${name}%`}}:null , continent ? {continent: `${continent}`}:null]
+            }
         });
         res.send(countries);
     }catch (err) {
@@ -36,7 +45,7 @@ router.get('/:idPais', async (req, res) => {
                     model: Activity,
                     attributes: ['name', 'difficulty', 'duration', 'season'],
                     through: {
-                        attributes: ['activity_id', 'country_id'],
+                        attributes: [],
                     }
                 }
             ]
