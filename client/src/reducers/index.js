@@ -2,7 +2,9 @@ const initialState = {
     countriesActivity: [],
     countriesLoaded: [],
     countryDetail: {},
-    countriesByAct: []
+    countriesByAct: [],
+    numCountriesLoad : [],
+    routeCountries: {}
 }
 
 function rootReducer(state = initialState, action) {
@@ -16,7 +18,9 @@ function rootReducer(state = initialState, action) {
         case "GET_COUNTRY_DETAIL":
             return { ...state, countryDetail: action.payload}
         case "GET_COUNTRIES":
-            return { ...state, countriesLoaded: action.payload }
+            return { ...state, countriesLoaded: action.payload.rows, numCountriesLoad: action.payload.count }
+        case "CONF_ROUTE_COUNTRIES":
+            return {...state, routeCountries: action.payload} 
         default:
             return state
     }

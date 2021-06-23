@@ -6,12 +6,12 @@ const Op = require('sequelize').Op;
 
 router.get('/', async (req, res) => {
     try {
-        const { page, size, name, continent, order, type } = req.query;
+        const { page, size, name, continent, order: or = 'name', type: tp = 'ASC' } = req.query;
         const limit = size ? size : 10;
         const offset = page ? page * limit : 0;
         const countries = await Country.findAndCountAll({
             order: [
-                [`${order}`, `${type}`]
+                [`${or}`, `${tp}`]
             ],
             include: [
                 {
@@ -35,7 +35,6 @@ router.get('/', async (req, res) => {
         res.send(countries);
     }catch (err) {
         console.log(err)
-        res.status(404).send('Pais no encontradooooo')
     }
 })
 

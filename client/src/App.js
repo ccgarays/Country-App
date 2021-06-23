@@ -7,6 +7,7 @@ import LandingPage from './components/LandingPage/LandingPage'
 import AddActivity from './components/AddActivity/AddActivity'
 import HomeCountries from './components/HomeCountries/HomeCountries'
 import Nav from './components/Nav/Nav';
+import Pagination from './components/Pagination/Pagination';
 
 
 
@@ -18,6 +19,7 @@ function App() {
       <Nav/>
       <Route exact path='/' component={LandingPage} />
       <Route exact path='/countries' component={HomeCountries} />
+      <Route exact path='/countries' component={Pagination}/>
       <Route path='/countries/:idPais' component={Country} />
       <Route path='/countries/?' component={Country} />
       <Route path='/activity' component={AddActivity}/>

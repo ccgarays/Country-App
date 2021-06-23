@@ -1,17 +1,12 @@
-// aqui se deben renderizar todos los paises: componente CardCountry
-//tener en cuenta que es con paginacion
-import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux';
 
-import { getActivities, getCountries, getCountriesByAct } from '../../actions'
+import { getActivities, getCountries, getCountriesByAct, configRouteCoutries } from '../../actions'
 import { Country } from '../CountryCard/CountryCard'
 import './HomeCountries.css'
 
 
 export function Countries(props) {
-    const [page, setPages] = useState(0)
-    const [size, setSize] = useState(10)
     const [name, setName] = useState('')
     const [continent, setContinent] = useState('')
     const [activity, setActivity] = useState('')
@@ -19,25 +14,21 @@ export function Countries(props) {
     const [filter , setFilter] = useState('')
     
     let continentes = ['Asia', 'Europe', 'Africa', 'Oceania', 'Americas', 'Polar']
-    const data = { page, size, continent, order } // ponemos { name, page, size, continent, order } si queremos que los paises vayan apareciendo en patanlla
+    const data = { continent, order, name }
 
     useEffect(() => {
         props.getCountries(data)
         props.getActivities();
-    }, [page, size, continent, order, name]) 
+        props.configRoute(data)
+    }, [continent, order, name]) 
 
     useEffect(() => {
         props.getCountriesByAct(activity)
     }, [activity])
 
-    function onPageChanged(data) {
-        const { currentPage, totalPages, pageLimit } = data;
-
-    }
     
     function handleSubmit(e) {
         e.preventDefault();
-        props.getCountries({...data, name})
         if(!props.countries.length){ 
             window.alert('Pais no encontrado')
         }
@@ -108,6 +99,7 @@ export function Countries(props) {
                 </select>
                 :null}</p>
             </form>
+            <h3 style={{marginLeft: '150px', marginBottom: '70px'}}>{props.numCountriesLoad} / COUNTRIES </h3>
             <div className="container-countries">
                 {activity ? 
                     props.countriesByAct && props.countriesByAct.map(obj => 
@@ -117,10 +109,7 @@ export function Countries(props) {
                         <Country key={country.id} flag={country.flag} name={country.name} continent={country.continent} idPais={country.id} />
                 )}
             </div>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                <div >1</div>
-                <div>2</div>
-                <div>3</div>
+            <div>
             </div>
         </div>
     )
@@ -130,7 +119,9 @@ function mapStateToProps(state) {
     return {
         countries: state.countriesLoaded,
         activities: state.countriesActivity,
-        countriesByAct: state.countriesByAct
+        countriesByAct: state.countriesByAct,
+        numCountriesLoad: state.numCountriesLoad,
+        route: state.routeCountries
     }
 }
 
@@ -138,7 +129,8 @@ function mapDispatchToProps(dispatch) {
     return { 
         getCountries: name => dispatch(getCountries(name)),
         getActivities: activity => dispatch(getActivities(activity)),
-        getCountriesByAct: activity => dispatch(getCountriesByAct(activity))
+        getCountriesByAct: activity => dispatch(getCountriesByAct(activity)),
+        configRoute: route => dispatch(configRouteCoutries(route)),
     }
 }
 
