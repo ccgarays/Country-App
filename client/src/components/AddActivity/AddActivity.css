@@ -36,3 +36,8 @@
     position: relative;
     left: 380px;
 }
+
+
+.form-act p + button {
+    width: 958.6px;
+}

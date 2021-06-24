@@ -8,74 +8,76 @@ import axios from 'axios'
 
 
 export function AddActivity(props) {
-  const [activity, setActivity] = useState({ name: "", duration: null, difficulty: null, season: "" });
+  const [activity, setActivity] = useState([{ name: "", duration: null, difficulty: null, season: "" }]);
   const [countries, setCountries] = useState([])
-  const [numAct, setNumAct] = useState([1])
- 
+
 
   useEffect(() => {
     props.getAllCountries('all')
-  },[])
+  }, [])
 
   function handleChange(e) {
-    var prop = e.target.name
-    var value = e.target.value
-    setActivity({ ...activity, [prop]: value })
+    const prop = e.target.name
+    const value = e.target.value
+    const index = prop.slice(prop.length - 1, prop.length)
+    const name = prop.slice(0, prop.length - 1)
+    let actividades = [...activity]
+    actividades[index] = { ...actividades[index], [name]: value }
+    setActivity(actividades)
   }
+
 
   function handleSubmit(e) {
     e.preventDefault();
-    const act = {
-      name: activity.name,
-      duration: activity.duration,
-      difficulty: activity.difficulty,
-      season: activity.season,
-      country: countries.length ? countries.map(obj => obj.value) : ''
-    };
-
-    console.log(act.country)
-    axios.post('http://localhost:3001/activity', act)
-      .then(res => {
-        console.log(res)
-        console.log(res.data)
-      }).catch(err => console.log(err))
-
-    setActivity({ name: "", duration: null, difficulty: null, season: "" })
-    console.log(activity)
+    for (let act of activity) {
+      const name = act.name
+      const duration = act.duration
+      const difficulty = act.difficulty
+      const season = act.season
+      const country = countries.length ? countries.map(obj => obj.value) : ''
+      
+      axios.post('http://localhost:3001/activity', {name, duration, difficulty, season, country})
+        .then(res => {
+          console.log(res)
+          console.log(res.data)
+        }).catch(err => console.log(err))
+    }
   }
 
 
   function selectCountry(country) {
-    setCountries( country)
+    setCountries(country)
   }
 
-  function createNewAct(e){
+
+  function createNewAct(e) {
     const prop = e.target.name
-    console.log(numAct)
-    if(prop === 'create') setNumAct([...numAct, 1])
+    setActivity([...activity, { name: "", duration: null, difficulty: null, season: "" }])
   }
+
   return (
     <div className='form'>
-      <form className='form-act' onSubmit={handleSubmit}>
-        <h3 className='title-form'>AGREGAR ACTIVIDAD</h3>
-        {numAct.map(el => 
-          <p key={el + 1}>
-          <label className='name-label' >Nombre</label>
-          <input name="name" type="text" onChange={handleChange} />
-          <label>Duracion</label>
-          <input name="duration" type="text" onChange={handleChange} />
-          <label>Dificultad</label>
-          <input name="difficulty" type="text" onChange={handleChange} />
-          <label>Temporada</label>
-          <input name="season" type="text" onChange={handleChange} />
-          {/* <button style={{borderRadius: '300px'}} name='delete' onClick={createNewAct}>x</button> */}
-          </p>
+      <div className='form-act'>
+        <form  onSubmit={handleSubmit}>
+          <h3 className='title-form'>AGREGAR ACTIVIDAD</h3>
+          {activity.map((act, index) =>
+            <p key={index}>
+              <label className='name-label' >Nombre</label>
+              <input name={`name${index}`} type="text" onChange={handleChange} />
+              <label>Duracion</label>
+              <input name={`duration${index}`} type="text" onChange={handleChange} />
+              <label>Dificultad</label>
+              <input name={`difficulty${index}`} type="text" onChange={handleChange} />
+              <label>Temporada</label>
+              <input name={`season${index}`} type="text" onChange={handleChange} />
+              {/* <button style={{borderRadius: '300px'}} name='delete' onClick={createNewAct}>x</button> */}
+            </p>
           )}
-          <p>{props.allCountries.length ? <Select autosize={true} isMulti name='countries' options={props.allCountries} onChange={selectCountry} placeholder='Selecciones país...'/> : null}</p>
-
-        <button className='add' type="submit">Agregar</button>
+          <p>{props.allCountries.length ? <Select autosize={true} isMulti name='countries' options={props.allCountries} onChange={selectCountry} placeholder='Selecciones país...' /> : null}</p>
+          <button className='add' type="submit">Agregar</button>
+        </form>
         {countries.length ? <button className='add-new' type="submit" name='create' onClick={createNewAct} >Nueva Actividad</button> : null}
-      </form>
+      </div>
     </div>
   )
 };
