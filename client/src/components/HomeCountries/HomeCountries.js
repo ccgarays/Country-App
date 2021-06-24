@@ -43,6 +43,7 @@ export function Countries(props) {
     function onfilter(e) {
         var value = e.target.value
         setFilter(value)
+        console.log(value)
     }
 
     function filterContinent(e) {

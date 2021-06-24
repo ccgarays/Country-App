@@ -1,0 +1,38 @@
+.form {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-act input {
+    border-radius: 10px;
+    width: 150px;
+    height: 25px;
+}
+
+.form-act label {
+    margin-left: 20px;
+}
+
+.form-act .name-label {
+    margin-left: 0px;
+}
+
+.form-act p{
+    margin-top: 30px;
+}
+
+
+.form-act {
+    display: flex;
+    flex-direction: column;
+    margin-left: 130px;
+    padding: 0px 50px 50px 50px;
+    border: none;
+    border-radius: 40px 10px;
+    background:#6f8ee8;
+}
+
+.title-form {
+    position: relative;
+    left: 380px;
+}
