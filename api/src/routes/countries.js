@@ -41,6 +41,20 @@ router.get('/', async (req, res) => {
 
 router.get('/:idPais', async (req, res) => {
     const { idPais } = req.params;
+    //se adiciona esta condicion para obtener todos los nombres de los paises. Esto, para dar soporte a la ruta de AddActivity en el front
+    if(idPais === 'all') {
+        try{
+            const countries = await Country.findAll({
+                attributes: [['name','value'], ['name', 'label']], //ponemos alias para brindar soporte al componente react-selector que requiere de las props value & label
+                                                                //react-select requiere array de la forma: [{value: Country1, label:Country1},{value: Country2, label:Country2}, ... ]
+            })
+            return res.send(countries)
+        }catch (err){
+            console.log(err)
+            res.status(404).send('Error al cargar paises en base de datos')
+        }
+    }
+
     try {
         const { subregion, area } = (await axios.get(`https://restcountries.eu/rest/v2/alpha/${idPais}`)).data;
         const countryDB = await Country.findByPk(idPais, {
@@ -61,6 +75,7 @@ router.get('/:idPais', async (req, res) => {
         res.status(404).send('Pais no encontrado')
     }
 });
+
 
 
 module.exports = router;
