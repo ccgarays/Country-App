@@ -23,8 +23,10 @@ export function AddActivity(props) {
     disabled: true
   }]);
 
-  const [countries, setCountries] = useState([])
+  //estado para componente react-select
+  //const [countries, setCountries] = useState([])
   const [errorS, setErrorS] = useState(true)
+  const [countries, setCountries] = useState({country:[]})
 
 
   useEffect(() => {
@@ -45,6 +47,24 @@ export function AddActivity(props) {
     return !valid
   }
 
+  function handleReset() {
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
+    setActivity([{
+        name: "",
+        duration: null,
+        difficulty: null,
+        season: "",
+        errors: {
+          name: "",
+          duration: "",
+          difficulty: "",
+          season: ""
+        },
+        disabled: true
+      }]);
+  };
 
   function handleChange(e) {
     const prop = e.target.name
@@ -87,7 +107,8 @@ export function AddActivity(props) {
       const duration = act.duration
       const difficulty = act.difficulty
       const season = act.season
-      const country = countries.length ? countries.map(obj => obj.value) : ''
+      //const country = countries.length ? countries.map(obj => obj.value) : '' constante para funcionamiento de react selects
+      const country = countries.country
 
       axios.post('http://localhost:3001/activity', { name, duration, difficulty, season, country })
         .then(res => {
@@ -95,14 +116,29 @@ export function AddActivity(props) {
           console.log(res.data)
         }).catch(err => console.log(err))
     }
+
+    handleReset();
   }
 
-
-  function selectCountry(country) {
+  //función para componente react-select
+  /* function selectCountry(country) {
     setCountries(country)
+  } */
+
+  
+  function selectCountry(e) {
+    const opciones = e.target.options;
+    const seleccionados = [];
+    for (let i = 0; i < opciones.length; i++) {
+      if (opciones[i].selected) {
+        seleccionados.push(opciones[i].value);
+      }      
+    }    
+    setCountries({
+      country: seleccionados
+    })
   }
-
-
+  
 
   function createNewAct(e) {
     const prop = e.target.name
@@ -152,11 +188,17 @@ export function AddActivity(props) {
                 {/* <button style={{borderRadius: '300px'}} name='delete' onClick={createNewAct}>x</button> */}
               </div>
             )}
-  
-            <p>{props.allCountries.length ? <Select autosize={true} isMulti name='countries' options={props.allCountries} onChange={selectCountry} placeholder='Selecciones país...' /> : null}</p>
+            {countries.country.length ? <p style={{display: 'inline', color: 'black'}}>Seleccionados:</p>: null}
+            <p style={{backgroundColor: 'white'}}>{countries.country.length ? countries.country.map(count => <p style={{display: 'inline', marginRight: '15px', color: 'black'}}>{count}</p>): null}</p>
+            <p>
+              <select multiple style={{width: '958.6px'}} onChange={selectCountry}>
+                {props.allCountries.length ? props.allCountries.map((country,index) => <option key={index} value={country.value}>{country.value}</option>): null}
+              </select>
+            </p>
+            {/* <p>{props.allCountries.length ? <Select autosize={true} isMulti name='countries' options={props.allCountries} onChange={selectCountry} placeholder='Selecciones país...' /> : null}</p> */}
             <button className='add' type="submit" disabled={errorS} >Agregar</button>
           </form>
-          {countries.length ? <button className='add-new' type="submit" name='create' onClick={createNewAct} >Nueva Actividad</button> : null}
+          {countries.country.length ? <button className='add-new' type="submit" name='create' onClick={createNewAct} >Nueva Actividad</button> : null}
         </div>
       </div>
     </div>

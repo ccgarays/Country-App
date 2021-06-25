@@ -1,7 +1,7 @@
 .Nav {
     display: flex;
     justify-content: space-evenly;
-    background-color: gray;
+    background-color: #282c34;
 }
 
 .home, .activity{

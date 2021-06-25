@@ -11,7 +11,7 @@ export function Country(props) {
     return (
         <div className="container-country">
             <div className="container-inf">
-                <Link to={`/countries/${idPais}`}>
+                <Link to={`/countries/${idPais}`} className='country-card'>
                     <h5>{name}</h5>
                 </Link>
                 <p>{continent}</p>
@@ -22,5 +22,3 @@ export function Country(props) {
         </div>
     )
 }
-
-//export default connect(mapStateToProps, null)(Country);

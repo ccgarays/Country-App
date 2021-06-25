@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux';
 import { getCountryDetail } from '../../actions/index'
+import './CountryDetail.css'
 
 
 export function Country(props) {
@@ -17,17 +18,17 @@ if(!name) {
 }
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+        <div className='container-detail' >
             <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                <h2>{name}</h2>
+                <h2><b>{name}</b></h2>
                 <img src={flag} style={{ width: '300px', height: 'auto' }} />
-                <p>Id: {id}</p>
-                <p>Continente: {continent}</p>
-                <p>Capital: {capital}</p>
-                <p>Subregión: {subregion}</p>
-                <p>Area: {area}</p>
-                <p>Población: {population}</p>
-                {activities.length ? <h3>Actividades turisticas</h3>:null}
+                <p><b>Id:</b> {id}</p>
+                <p><b>Continente:</b> {continent}</p>
+                <p><b>Capital:</b> {capital}</p>
+                <p><b>Subregión:</b> {subregion}</p>
+                <p><b>Area:</b> {area} km2</p>
+                <p><b>Población:</b> {population} hab</p>
+                {activities.length ? <h3 ><b>Actividades turisticas</b></h3>:null}
             </div>
             {activities.length ?
             <div>

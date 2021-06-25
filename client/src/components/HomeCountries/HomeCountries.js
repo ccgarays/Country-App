@@ -65,6 +65,7 @@ export function Countries(props) {
         
     return (
         <div className='container-2'>
+            <header className="home-header">
             <form className="form-selection" >
             <p><input placeholder="Buscar país" onChange={handleChange} style={{borderRadius: '1px'}} onSubmit={handleSubmit}></input>
             <button type="submit" onClick={handleSubmit}><i className="fas fa-search"></i></button></p>
@@ -99,7 +100,7 @@ export function Countries(props) {
                 </select>
                 :null}</p>
             </form>
-            <h3 style={{marginLeft: '150px', marginBottom: '70px'}}>{props.numCountriesLoad} / COUNTRIES </h3>
+            <h3>{props.numCountriesLoad} / COUNTRIES </h3>
             <div className="container-countries">
                 {activity ? 
                     props.countriesByAct && props.countriesByAct.map(obj => 
@@ -111,6 +112,7 @@ export function Countries(props) {
             </div>
             <div>
             </div>
+            </header>
         </div>
     )
 }
