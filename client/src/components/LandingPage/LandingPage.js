@@ -1,13 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import '../../App.css';
+import logo from '../../logo.svg';
+
+import './LandingPage.css'
 
 export function LandingPage() {
-    
+
     return (
-        <Link to={'/countries'}>
-            <button>HOME</button>
-        </Link>
+        <div className="lang">
+            <header className="lang-header">
+                <Link to={'/countries'}>
+                    <button className='button'>HOME</button>
+                </Link>
+            </header>
+        </div>
+
     )
 }
 

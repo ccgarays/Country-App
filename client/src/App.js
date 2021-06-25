@@ -11,18 +11,19 @@ import Pagination from './components/Pagination/Pagination';
 
 
 
+
 function App() {
 
   return (
     <>
-    <Route path='/' component={LandingPage} >
-      <Nav/>
+    <Route>
       <Route exact path='/' component={LandingPage} />
+      <Route path='/countries' component={Nav} />
       <Route exact path='/countries' component={HomeCountries} />
       <Route exact path='/countries' component={Pagination}/>
       <Route path='/countries/:idPais' component={Country} />
       <Route path='/countries/?' component={Country} />
-      <Route path='/activity' component={AddActivity}/>
+      <Route path='/activity' component={AddActivity} />
     </Route>
     </>
   );

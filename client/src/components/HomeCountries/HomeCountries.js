@@ -43,7 +43,6 @@ export function Countries(props) {
     function onfilter(e) {
         var value = e.target.value
         setFilter(value)
-        console.log(value)
     }
 
     function filterContinent(e) {
@@ -65,7 +64,7 @@ export function Countries(props) {
     
         
     return (
-        <div>
+        <div className='container-2'>
             <form className="form-selection" >
             <p><input placeholder="Buscar país" onChange={handleChange} style={{borderRadius: '1px'}} onSubmit={handleSubmit}></input>
             <button type="submit" onClick={handleSubmit}><i className="fas fa-search"></i></button></p>

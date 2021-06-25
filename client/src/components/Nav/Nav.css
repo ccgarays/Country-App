@@ -1,0 +1,10 @@
+.Nav {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: gray;
+}
+
+.home, .activity{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
