@@ -2,7 +2,9 @@
 
 .container-country {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
     border: 3px solid gray;
     border-radius: 10px;
     margin-left: 40px;
@@ -10,26 +12,21 @@
     font-family: 'Roboto', sans-serif;
 }
 
-.container-inf {
-    padding: 10px;
-    border-right: 3px solid gray;
+
+.container-flag img{
+    width: 245px;
+    height: 150px;
+    border-radius : 4%;
+    object-fit: cover;
+
 }
 
-.container-flag {
-    padding: 10px 
-}
-
-img {
-    width: 50px;
-    height: 35px;
-}
-
-h5 {
+.container-flag h5 {
     margin-bottom: 10px;
     margin-top: 0px;
 }
 
-p {
+.container-info p {
     margin-bottom: 0px;
     margin-top: 0px;
     color: white;
@@ -37,6 +34,18 @@ p {
 
 .country-card {
     color: #FFF;    
-}.country-card:hover {
-    color: rgb(238, 246, 247)
- }
+    text-decoration: none;
+}
+
+
+ .container-country{
+    box-sizing: border-box;
+    width: 250px;
+    height: 250px;
+}
+
+.container-inf {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

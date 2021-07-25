@@ -12,16 +12,18 @@
 
 .container-countries {
     display: flex;
+    box-sizing: border-box;
+    width: 1000px;
+    height: auto;
     flex-flow: row wrap;
     padding-left: 10px;
     padding-right: 50px;
     justify-content: space-between;
     margin-right: 100px;
-    margin-left: 100px;
+    margin-left: 160px;
 }
 
 .home-header {
-    background-image: url('../../img/HomeCount.jpg');
     background-color: #282c34;
     min-height: 100vh;
     justify-content: center;

@@ -1,5 +1,5 @@
-.container {
-    background-image: url('../../img/addAct.jpg');
+.container-activity {
+    background-color: #282c34;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: scroll;
@@ -45,7 +45,7 @@
     padding: 0px 50px 50px 50px;
     border: none;
     border-radius: 40px 10px;
-    background:rgba(199, 145, 18,0.5);
+    background:rgba(255, 255, 255,0.5);
 }
 
 .title-form {

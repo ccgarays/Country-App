@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import {getCountries} from '../../actions'
 
+import './Pagination.css'
+
 
 export function Pagination(props) {
     const [currentPage, setcurrentPage] = useState(0)
@@ -44,7 +46,7 @@ export function Pagination(props) {
 
 
     return (
-        <div>
+        <div className='container-pagination'>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <button name={0} onClick={changePage} >1</button>
                 {numPag <= 5 ? buttons.map(num => <button key={num} name={num-1} onClick={changePage}>{num}</button>): 

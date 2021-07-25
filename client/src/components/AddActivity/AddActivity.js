@@ -23,11 +23,8 @@ export function AddActivity(props) {
     disabled: true
   }]);
 
-  //estado para componente react-select
-  //const [countries, setCountries] = useState([])
+  const [countries, setCountries] = useState([]) 
   const [errorS, setErrorS] = useState(true)
-  const [countries, setCountries] = useState({country:[]})
-
 
   useEffect(() => {
     props.getAllCountries('all')
@@ -107,36 +104,18 @@ export function AddActivity(props) {
       const duration = act.duration
       const difficulty = act.difficulty
       const season = act.season
-      //const country = countries.length ? countries.map(obj => obj.value) : '' constante para funcionamiento de react selects
-      const country = countries.country
+      const country = countries.length ? countries.map(obj => obj.value) : '' 
 
       axios.post('http://localhost:3001/activity', { name, duration, difficulty, season, country })
         .then(res => {
-          console.log(res)
-          console.log(res.data)
         }).catch(err => console.log(err))
     }
 
     handleReset();
   }
 
-  //función para componente react-select
-  /* function selectCountry(country) {
+  function selectCountry(country) {
     setCountries(country)
-  } */
-
-  
-  function selectCountry(e) {
-    const opciones = e.target.options;
-    const seleccionados = [];
-    for (let i = 0; i < opciones.length; i++) {
-      if (opciones[i].selected) {
-        seleccionados.push(opciones[i].value);
-      }      
-    }    
-    setCountries({
-      country: seleccionados
-    })
   }
   
 
@@ -159,7 +138,7 @@ export function AddActivity(props) {
   }
 
   return (
-    <div className='container'>
+    <div className='container-activity'>
       <Link to={'/countries'}><button className='home-button' >HOME</button></Link>
       <div className='form'>
         <div className='form-act form'>
@@ -185,20 +164,12 @@ export function AddActivity(props) {
                 {activity[index].duration ? <p className='danger'>{activity[index].errors.duration}</p> : null}
                 {activity[index].difficulty ? <p className='danger'>{activity[index].errors.difficulty}</p> : null}
                 {activity[index].season ? <p className='danger'>{activity[index].errors.season}</p> : null}
-                {/* <button style={{borderRadius: '300px'}} name='delete' onClick={createNewAct}>x</button> */}
               </div>
             )}
-            {countries.country.length ? <p style={{display: 'inline', color: 'black'}}>Seleccionados:</p>: null}
-            <p style={{backgroundColor: 'white'}}>{countries.country.length ? countries.country.map(count => <p style={{display: 'inline', marginRight: '15px', color: 'black'}}>{count}</p>): null}</p>
-            <p>
-              <select multiple style={{width: '958.6px'}} onChange={selectCountry}>
-                {props.allCountries.length ? props.allCountries.map((country,index) => <option key={index} value={country.value}>{country.value}</option>): null}
-              </select>
-            </p>
-            {/* <p>{props.allCountries.length ? <Select autosize={true} isMulti name='countries' options={props.allCountries} onChange={selectCountry} placeholder='Selecciones país...' /> : null}</p> */}
+            <p>{props.allCountries.length ? <Select autosize={true} isMulti name='countries' options={props.allCountries} onChange={selectCountry} placeholder='Selecciones país...' /> : null}</p>
             <button className='add' type="submit" disabled={errorS} >Agregar</button>
           </form>
-          {countries.country.length ? <button className='add-new' type="submit" name='create' onClick={createNewAct} >Nueva Actividad</button> : null}
+          {countries.length && !errorS ? <button className='add-new' type="submit" name='create' onClick={createNewAct} >Nueva Actividad</button> : null}
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ export function Countries(props) {
     const [order, setOrder] = useState({order: 'name', type: 'ASC'})
     const [filter , setFilter] = useState('')
     
-    let continentes = ['Asia', 'Europe', 'Africa', 'Oceania', 'Americas', 'Polar']
+    let continents = ['Asia', 'Europe', 'Africa', 'Oceania', 'Americas', 'Polar']
     const data = { continent, order, name }
 
     useEffect(() => {
@@ -80,7 +80,7 @@ export function Countries(props) {
                         filter === 'continente' ?
                             <select name="continent" value={continent} onChange={filterContinent}>
                                 <option value=""></option>
-                                {continentes.map(continent => <option key={continent}>{continent}</option>)}
+                                {continents.map(continent => <option key={continent}>{continent}</option>)}
                             </select>
                         :
                             <select name="activity" value={activity} onChange={filterActivity}>
@@ -100,7 +100,6 @@ export function Countries(props) {
                 </select>
                 :null}</p>
             </form>
-            <h3>{props.numCountriesLoad} / COUNTRIES </h3>
             <div className="container-countries">
                 {activity ? 
                     props.countriesByAct && props.countriesByAct.map(obj => 
